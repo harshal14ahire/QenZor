@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "motion/react";
-import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud } from "lucide-react";
+import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud, CheckCircle, MapPin, DollarSign, ChevronDown } from "lucide-react";
 
 const Logo = ({ className = "" }: { className?: string }) => (
   <div className={`flex flex-col items-start ${className}`}>
@@ -40,6 +41,7 @@ const Header = () => (
         <a href="#services" className="hover:text-teal transition-colors">Services</a>
         <a href="#infrastructure" className="hover:text-teal transition-colors">Infrastructure</a>
         <a href="#case-studies" className="hover:text-teal transition-colors">Case Studies</a>
+        <a href="#careers" className="hover:text-teal transition-colors">Careers</a>
         <a href="#contact" className="hover:text-teal transition-colors">Contact</a>
       </div>
       <button className="md:hidden">
@@ -140,6 +142,199 @@ const TechStack = () => (
   </section>
 );
 
+const JobCard = ({
+  title,
+  description,
+  requirements,
+  compensation,
+}: {
+  title: string;
+  description: string;
+  requirements: string[];
+  compensation: string;
+}) => {
+  const [showForm, setShowForm] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="bg-white/5 border border-white/10 p-8 md:p-10"
+    >
+      {/* Badges */}
+      <div className="flex flex-wrap items-center gap-3 mb-6">
+        <span className="inline-flex items-center gap-1.5 bg-teal/15 text-teal text-[10px] font-mono uppercase tracking-widest px-3 py-1.5">
+          <MapPin className="w-3 h-3" /> Remote
+        </span>
+        <span className="inline-flex items-center gap-1.5 bg-white/5 text-white/40 text-[10px] font-mono uppercase tracking-widest px-3 py-1.5">
+          Full-time / Part-time
+        </span>
+      </div>
+
+      {/* Title */}
+      <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-4">
+        {title}
+      </h3>
+
+      {/* Description */}
+      <p className="text-white/60 leading-relaxed mb-8 max-w-2xl">{description}</p>
+
+      {/* Requirements */}
+      <div className="mb-8">
+        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-4">
+          Requirements
+        </p>
+        <ul className="space-y-3">
+          {requirements.map((req, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <CheckCircle className="w-4 h-4 text-teal flex-shrink-0 mt-0.5" />
+              <span className="text-white/70 text-sm leading-relaxed">{req}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Compensation */}
+      <div className="flex items-center gap-3 mb-8 py-4 border-t border-b border-white/10">
+        <DollarSign className="w-4 h-4 text-teal flex-shrink-0" />
+        <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
+          Compensation
+        </span>
+        <span className="text-teal font-semibold text-sm">{compensation}</span>
+      </div>
+
+      {/* Apply Now button */}
+      <motion.button
+        onClick={() => setShowForm((prev) => !prev)}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        aria-expanded={showForm}
+        className="inline-flex items-center gap-2 bg-teal text-midnight px-8 py-3.5 font-bold text-base tracking-tight hover:bg-teal/90 transition-colors"
+      >
+        {showForm ? "Hide Application" : "Apply Now"}
+        <motion.span
+          animate={{ rotate: showForm ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="flex items-center"
+        >
+          <ChevronDown className="w-4 h-4" />
+        </motion.span>
+      </motion.button>
+
+      {/* Google Form iframe — revealed on Apply Now */}
+      {showForm && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="mt-8 w-full overflow-hidden border border-white/10"
+        >
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeiiI-lBaLkUyhMeKjqfsUdC-hWg1HzmFXjZQxK-7SIo_mQwg/viewform?embedded=true"
+            title={`Application Form – ${title}`}
+            width="100%"
+            height="800px"
+            style={{ border: "none", display: "block" }}
+            loading="lazy"
+            allowFullScreen
+          />
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
+
+const JoinOurTeam = () => (
+  <section id="careers" className="py-24 px-6 bg-midnight text-white">
+    <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Label */}
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-teal mb-6">
+          Join Our Team
+        </p>
+
+        {/* Title */}
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-6">
+          We are Hiring:{" "}
+          <span className="text-teal">Junior Lead Generation Associate</span>
+        </h2>
+
+        {/* Subtitle */}
+        <p className="text-lg md:text-xl text-white/70 mb-12 leading-relaxed max-w-2xl">
+          Help us bridge the gap between world-class code and the clients who need it.
+        </p>
+
+        {/* What we look for */}
+        <div className="mb-12">
+          <h3 className="text-sm font-mono uppercase tracking-[0.2em] text-white/50 mb-6">
+            What We Look For
+          </h3>
+          <ul className="space-y-4">
+            {[
+              "Excellent English writing skills.",
+              "Persistence and a 'never give up' attitude.",
+              "Interest in IT and Software Development.",
+              "Ability to work 20–40 hours per week.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-4">
+                <CheckCircle className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                <span className="text-base md:text-lg text-white/80 leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Apply Button */}
+        <motion.a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeiiI-lBaLkUyhMeKjqfsUdC-hWg1HzmFXjZQxK-7SIo_mQwg/viewform?usp=publish-editor"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="inline-block bg-teal text-midnight px-10 py-4 font-bold text-lg tracking-tight hover:bg-teal/90 transition-colors mb-12"
+        >
+          Apply via Google Form
+        </motion.a>
+
+        {/* Google Form iframe */}
+        <div className="w-full overflow-hidden border border-white/10 rounded-sm">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeiiI-lBaLkUyhMeKjqfsUdC-hWg1HzmFXjZQxK-7SIo_mQwg/viewform?embedded=true"
+            title="Job Application Form"
+            width="100%"
+            style={{ minHeight: "800px", border: "none", display: "block" }}
+            loading="lazy"
+          />
+        </div>
+
+        {/* More Open Positions */}
+        <div className="border-t border-white/10 pt-16 mt-16">
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40 mb-10">
+            More Open Positions
+          </p>
+          <JobCard
+            title="Junior IT Lead Generation Specialist (Remote)"
+            description="We are looking for a highly motivated internet researcher to find potential clients, collect leads, and send outreach messages to founders who need web and mobile app development."
+            requirements={[
+              "Strong English writing skills.",
+              "Excellent web research skills.",
+              "Highly persistent and self-driven.",
+            ]}
+            compensation="Performance-based: Base + High Commission."
+          />
+        </div>
+      </motion.div>
+    </div>
+  </section>
+);
+
 const Footer = () => (
   <footer className="py-20 px-6 border-t border-midnight/5">
     <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -185,6 +380,7 @@ export default function App() {
         <Hero />
         <Services />
         <TechStack />
+        <JoinOurTeam />
         <section id="contact" className="py-32 px-6 max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-8">Ready to scale?</h2>
           <p className="text-xl text-midnight/60 mb-12 max-w-2xl mx-auto">
