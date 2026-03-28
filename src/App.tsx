@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud } from "lucide-react";
+import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud, CheckCircle } from "lucide-react";
 
 const Logo = ({ className = "" }: { className?: string }) => (
   <div className={`flex flex-col items-start ${className}`}>
@@ -40,6 +40,7 @@ const Header = () => (
         <a href="#services" className="hover:text-teal transition-colors">Services</a>
         <a href="#infrastructure" className="hover:text-teal transition-colors">Infrastructure</a>
         <a href="#case-studies" className="hover:text-teal transition-colors">Case Studies</a>
+        <a href="#careers" className="hover:text-teal transition-colors">Careers</a>
         <a href="#contact" className="hover:text-teal transition-colors">Contact</a>
       </div>
       <button className="md:hidden">
@@ -140,6 +141,78 @@ const TechStack = () => (
   </section>
 );
 
+const JoinOurTeam = () => (
+  <section id="careers" className="py-24 px-6 bg-midnight text-white">
+    <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Label */}
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-teal mb-6">
+          Join Our Team
+        </p>
+
+        {/* Title */}
+        <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-6">
+          We are Hiring:{" "}
+          <span className="text-teal">Junior Lead Generation Associate</span>
+        </h2>
+
+        {/* Subtitle */}
+        <p className="text-lg md:text-xl text-white/70 mb-12 leading-relaxed max-w-2xl">
+          Help us bridge the gap between world-class code and the clients who need it.
+        </p>
+
+        {/* What we look for */}
+        <div className="mb-12">
+          <h3 className="text-sm font-mono uppercase tracking-[0.2em] text-white/50 mb-6">
+            What We Look For
+          </h3>
+          <ul className="space-y-4">
+            {[
+              "Excellent English writing skills.",
+              "Persistence and a 'never give up' attitude.",
+              "Interest in IT and Software Development.",
+              "Ability to work 20–40 hours per week.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-4">
+                <CheckCircle className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                <span className="text-base md:text-lg text-white/80 leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Apply Button */}
+        <motion.a
+          href="https://forms.google.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="inline-block bg-teal text-midnight px-10 py-4 font-bold text-lg tracking-tight hover:bg-teal/90 transition-colors mb-12"
+        >
+          Apply via Google Form
+        </motion.a>
+
+        {/* Google Form iframe */}
+        <div className="w-full overflow-hidden border border-white/10 rounded-sm">
+          <iframe
+            src="https://forms.google.com"
+            title="Job Application Form"
+            width="100%"
+            style={{ minHeight: "800px", border: "none", display: "block" }}
+            loading="lazy"
+          />
+        </div>
+      </motion.div>
+    </div>
+  </section>
+);
+
 const Footer = () => (
   <footer className="py-20 px-6 border-t border-midnight/5">
     <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -185,6 +258,7 @@ export default function App() {
         <Hero />
         <Services />
         <TechStack />
+        <JoinOurTeam />
         <section id="contact" className="py-32 px-6 max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-8">Ready to scale?</h2>
           <p className="text-xl text-midnight/60 mb-12 max-w-2xl mx-auto">
