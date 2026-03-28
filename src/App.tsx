@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "motion/react";
-import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud, CheckCircle } from "lucide-react";
+import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud, CheckCircle, MapPin, DollarSign, ChevronDown } from "lucide-react";
 
 const Logo = ({ className = "" }: { className?: string }) => (
   <div className={`flex flex-col items-start ${className}`}>
@@ -141,6 +142,110 @@ const TechStack = () => (
   </section>
 );
 
+const JobCard = ({
+  title,
+  description,
+  requirements,
+  compensation,
+}: {
+  title: string;
+  description: string;
+  requirements: string[];
+  compensation: string;
+}) => {
+  const [showForm, setShowForm] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="bg-white/5 border border-white/10 p-8 md:p-10"
+    >
+      {/* Badges */}
+      <div className="flex flex-wrap items-center gap-3 mb-6">
+        <span className="inline-flex items-center gap-1.5 bg-teal/15 text-teal text-[10px] font-mono uppercase tracking-widest px-3 py-1.5">
+          <MapPin className="w-3 h-3" /> Remote
+        </span>
+        <span className="inline-flex items-center gap-1.5 bg-white/5 text-white/40 text-[10px] font-mono uppercase tracking-widest px-3 py-1.5">
+          Full-time / Part-time
+        </span>
+      </div>
+
+      {/* Title */}
+      <h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight mb-4">
+        {title}
+      </h3>
+
+      {/* Description */}
+      <p className="text-white/60 leading-relaxed mb-8 max-w-2xl">{description}</p>
+
+      {/* Requirements */}
+      <div className="mb-8">
+        <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-4">
+          Requirements
+        </p>
+        <ul className="space-y-3">
+          {requirements.map((req, i) => (
+            <li key={i} className="flex items-start gap-3">
+              <CheckCircle className="w-4 h-4 text-teal flex-shrink-0 mt-0.5" />
+              <span className="text-white/70 text-sm leading-relaxed">{req}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Compensation */}
+      <div className="flex items-center gap-3 mb-8 py-4 border-t border-b border-white/10">
+        <DollarSign className="w-4 h-4 text-teal flex-shrink-0" />
+        <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
+          Compensation
+        </span>
+        <span className="text-teal font-semibold text-sm">{compensation}</span>
+      </div>
+
+      {/* Apply Now button */}
+      <motion.button
+        onClick={() => setShowForm((prev) => !prev)}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        aria-expanded={showForm}
+        className="inline-flex items-center gap-2 bg-teal text-midnight px-8 py-3.5 font-bold text-base tracking-tight hover:bg-teal/90 transition-colors"
+      >
+        {showForm ? "Hide Application" : "Apply Now"}
+        <motion.span
+          animate={{ rotate: showForm ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="flex items-center"
+        >
+          <ChevronDown className="w-4 h-4" />
+        </motion.span>
+      </motion.button>
+
+      {/* Google Form iframe — revealed on Apply Now */}
+      {showForm && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="mt-8 w-full overflow-hidden border border-white/10"
+        >
+          <iframe
+            src="https://forms.google.com"
+            title={`Application Form – ${title}`}
+            width="100%"
+            height="800px"
+            style={{ border: "none", display: "block" }}
+            loading="lazy"
+            allowFullScreen
+          />
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
+
 const JoinOurTeam = () => (
   <section id="careers" className="py-24 px-6 bg-midnight text-white">
     <div className="max-w-4xl mx-auto">
@@ -206,6 +311,23 @@ const JoinOurTeam = () => (
             width="100%"
             style={{ minHeight: "800px", border: "none", display: "block" }}
             loading="lazy"
+          />
+        </div>
+
+        {/* More Open Positions */}
+        <div className="border-t border-white/10 pt-16 mt-16">
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40 mb-10">
+            More Open Positions
+          </p>
+          <JobCard
+            title="Junior IT Lead Generation Specialist (Remote)"
+            description="We are looking for a highly motivated internet researcher to find potential clients, collect leads, and send outreach messages to founders who need web and mobile app development."
+            requirements={[
+              "Strong English writing skills.",
+              "Excellent web research skills.",
+              "Highly persistent and self-driven.",
+            ]}
+            compensation="Performance-based: Base + High Commission."
           />
         </div>
       </motion.div>
