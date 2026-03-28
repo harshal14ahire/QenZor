@@ -232,7 +232,7 @@ const JobCard = ({
           className="mt-8 w-full overflow-hidden border border-white/10"
         >
           <iframe
-            src="https://forms.google.com"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeiiI-lBaLkUyhMeKjqfsUdC-hWg1HzmFXjZQxK-7SIo_mQwg/viewform?embedded=true"
             title={`Application Form – ${title}`}
             width="100%"
             height="800px"
@@ -293,7 +293,7 @@ const JoinOurTeam = () => (
 
         {/* Apply Button */}
         <motion.a
-          href="https://forms.google.com"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeiiI-lBaLkUyhMeKjqfsUdC-hWg1HzmFXjZQxK-7SIo_mQwg/viewform?usp=publish-editor"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.03 }}
@@ -306,7 +306,7 @@ const JoinOurTeam = () => (
         {/* Google Form iframe */}
         <div className="w-full overflow-hidden border border-white/10 rounded-sm">
           <iframe
-            src="https://forms.google.com"
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeiiI-lBaLkUyhMeKjqfsUdC-hWg1HzmFXjZQxK-7SIo_mQwg/viewform?embedded=true"
             title="Job Application Form"
             width="100%"
             style={{ minHeight: "800px", border: "none", display: "block" }}
