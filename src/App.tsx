@@ -1,6 +1,29 @@
-import { useState } from "react";
+import { useState, Component, ReactNode } from "react";
 import { motion } from "motion/react";
 import { Cpu, Globe, Layers, Shield, Zap, Database, Server, Code, Cloud, CheckCircle, MapPin, DollarSign, ChevronDown } from "lucide-react";
+
+type ErrorBoundaryProps = { children: ReactNode };
+type ErrorBoundaryState = { hasError: boolean };
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  declare props: Readonly<ErrorBoundaryProps>;
+  state: ErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: "2rem", textAlign: "center", fontFamily: "sans-serif" }}>
+          <h1>Something went wrong loading the page.</h1>
+          <p>Please try refreshing your browser.</p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const Logo = ({ className = "" }: { className?: string }) => (
   <div className={`flex flex-col items-start ${className}`}>
@@ -56,7 +79,7 @@ const Header = () => (
 const Hero = () => (
   <section className="pt-40 pb-20 px-6 max-w-7xl mx-auto min-h-[80vh] flex flex-col justify-center">
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 1, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
@@ -157,7 +180,7 @@ const JobCard = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 1, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
@@ -250,7 +273,7 @@ const JoinOurTeam = () => (
   <section id="careers" className="py-24 px-6 bg-midnight text-white">
     <div className="max-w-4xl mx-auto">
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 1, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
@@ -374,24 +397,26 @@ const Footer = () => (
 
 export default function App() {
   return (
-    <div className="relative">
-      <Header />
-      <main>
-        <Hero />
-        <Services />
-        <TechStack />
-        <JoinOurTeam />
-        <section id="contact" className="py-32 px-6 max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-8">Ready to scale?</h2>
-          <p className="text-xl text-midnight/60 mb-12 max-w-2xl mx-auto">
-            Let's discuss your infrastructure requirements and build a solution that grows with your business.
-          </p>
-          <button className="bg-midnight text-white px-12 py-5 rounded-none font-bold text-xl tracking-tight hover:bg-midnight/90 transition-all hover:scale-105">
-            Contact Engineering
-          </button>
-        </section>
-      </main>
-      <Footer />
-    </div>
+    <ErrorBoundary>
+      <div className="relative">
+        <Header />
+        <main>
+          <Hero />
+          <Services />
+          <TechStack />
+          <JoinOurTeam />
+          <section id="contact" className="py-32 px-6 max-w-7xl mx-auto text-center">
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-8">Ready to scale?</h2>
+            <p className="text-xl text-midnight/60 mb-12 max-w-2xl mx-auto">
+              Let's discuss your infrastructure requirements and build a solution that grows with your business.
+            </p>
+            <button className="bg-midnight text-white px-12 py-5 rounded-none font-bold text-xl tracking-tight hover:bg-midnight/90 transition-all hover:scale-105">
+              Contact Engineering
+            </button>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    </ErrorBoundary>
   );
 }
